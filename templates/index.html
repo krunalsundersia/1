@@ -1,22 +1,94 @@
+{% extends "layout.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='/style.css') }}">
-  <title>Flask OAuth tutorial</title>
-</head>
-<body>
-  <h1>Flask OAuth Tutorial</h1>
-  <div class="oauth-box">  
-    <div id="oauth-google">
-      <a href="{{ url_for('google_login') }}">
-        <img src="{{ url_for('static', filename='/images/google-logo.png') }}" 
-        width="55px" height="55px" alt="Google logo">
-      </a>
+{% block title %}Dashboard - Flask Google Auth{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-shield-alt text-blue-500 text-xl mr-3"></i>
+                    <span class="text-xl font-semibold text-gray-900">Flask Auth</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    {% if user %}
+                    <img class="h-8 w-8 rounded-full" src="{{ user.picture }}" alt="{{ user.name }}">
+                    <span class="text-gray-700">{{ user.name }}</span>
+                    <a href="{{ url_for('logout') }}" 
+                       class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
+                        Logout
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                Welcome, {{ user.name }}! 🎉
+            </h1>
+            <p class="text-xl text-gray-600 mb-8">
+                You have successfully authenticated with Google OAuth.
+            </p>
+        </div>
+
+        <!-- User Info Card -->
+        <div class="bg-white rounded-lg shadow-md p-6 max-w-md mx-auto">
+            <div class="flex items-center space-x-4 mb-4">
+                <img class="h-16 w-16 rounded-full" src="{{ user.picture }}" alt="{{ user.name }}">
+                <div class="text-left">
+                    <h2 class="text-xl font-semibold text-gray-900">{{ user.name }}</h2>
+                    <p class="text-gray-600">{{ user.email }}</p>
+                </div>
+            </div>
+            
+            <div class="space-y-3 text-sm text-gray-600">
+                <div class="flex items-center">
+                    <i class="fas fa-id-card text-blue-500 mr-2"></i>
+                    <span>Google ID: {{ user.google_id }}</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-envelope text-green-500 mr-2"></i>
+                    <span>Email: {{ user.email }}</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    <span>Status: Authenticated</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-shield-alt text-blue-500 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Secure Authentication</h3>
+                <p class="text-gray-600">Powered by Google OAuth 2.0 for maximum security.</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-rocket text-green-500 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Vercel Ready</h3>
+                <p class="text-gray-600">Optimized for serverless deployment on Vercel.</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-mobile-alt text-purple-500 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Responsive Design</h3>
+                <p class="text-gray-600">Works perfectly on all devices and screen sizes.</p>
+            </div>
+        </div>
     </div>
-   
-  </div>
-</body>
-</html>
+</div>
+{% endblock %}
